@@ -1,8 +1,3 @@
-package ru.mishe1.homeworks.hw4;
-
-import java.util.Base64;
-import java.util.Scanner;
-
 // Зарегистрироваться на github.com
 // Установить git
 // Установить JDK и среду разработки
@@ -13,12 +8,25 @@ import java.util.Scanner;
 // Когда программа запросит - введите свое имя латиницей
 // Сделайте pull-request с программой.
 // Отправить в чат задания ссылку на pull-request
+
+package ru.mishe1.homeworks.hw4;
+
+import java.util.Base64;
+import java.util.Scanner;
+
 public class HomeWork {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Please enter you full name");
-        String fullName = sc.nextLine();
-        String encodedFullName = Base64.getEncoder().encodeToString(fullName.getBytes());
-        System.out.println("Program result: " + encodedFullName);
+        final var name = fetchName();
+        System.out.println("Program result: " + getBase64Encoded(name));
+    }
+
+    private static String fetchName() {
+        final var scanner = new Scanner(System.in);
+        System.out.println("Please enter your full name");
+        return scanner.nextLine();
+    }
+
+    private static String getBase64Encoded(String text) {
+        return Base64.getEncoder().encodeToString(text.getBytes());
     }
 }
