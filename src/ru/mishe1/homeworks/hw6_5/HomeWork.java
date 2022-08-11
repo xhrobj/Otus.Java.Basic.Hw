@@ -16,7 +16,7 @@ package ru.mishe1.homeworks.hw6_5;
     1. Сделать так чтобы все данные вопросов/ ответов / правильных ответов - хранились бы в одном массиве.
        (тут будет скорей всего 3-х мерный) String[][][]
 
-    2. {не сделано} после того как ты сделаешь 1-й пункт и проверишь что он работает.
+    2. после того как ты сделаешь 1-й пункт и проверишь что он работает.
        сделай так чтобы тип ответы был не String а Integer то есть вместо "3" будет 3
  */
 
@@ -28,10 +28,10 @@ public class HomeWork {
     private static final int ANSWERS_INDEX = 2;
 
     public static void main(String[] args) {
-        final var questions = new String[][] {
-                {"В файл с каким расширением компилируется java-файл?", "3", "ss", "java", "class", "exe"},
-                {"С помощью какой команды git можно получить полную копию удалённого репозитория?", "3", "commit", "push", "clone", "copy"},
-                {"Какой цикл применяется, когда не известно число операций?", "1", "while", "for", "loop"}
+        final var questions = new Object[][] {
+                {"В файл с каким расширением компилируется java-файл?", 3, "ss", "java", "class", "exe"},
+                {"С помощью какой команды git можно получить полную копию удалённого репозитория?", 3, "commit", "push", "clone", "copy"},
+                {"Какой цикл применяется, когда не известно число операций?", 1, "while", "for", "loop"}
         };
 
         final var scanner = new Scanner(System.in);
@@ -49,7 +49,7 @@ public class HomeWork {
 
             print("\n" + "Ваш ответ: ");
 
-            final var userAnswer = scanner.nextLine();
+            final var userAnswer = Integer.valueOf(scanner.nextLine());
             final var isCorrectAnswer = userAnswer.equals(questions[questionsIndex][CORRECT_ANSWER_INDEX]);
 
             if (isCorrectAnswer) {
