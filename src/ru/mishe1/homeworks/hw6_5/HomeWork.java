@@ -49,7 +49,7 @@ public class HomeWork {
 
             print("\n" + "Ваш ответ: ");
 
-            final var userAnswer = Integer.valueOf(scanner.nextLine());
+            final var userAnswer = Integer.valueOf(scanner.nextInt());
             final var isCorrectAnswer = userAnswer.equals(questions[questionsIndex][CORRECT_ANSWER_INDEX]);
 
             if (isCorrectAnswer) {
