@@ -25,15 +25,55 @@
 
 package ru.mishe1.homeworks.hw23;
 
+import ru.mishe1.homeworks.hw23.rusnumberformatter.*;
+
 public class Homework {
     public static void main(String[] agrs) {
-        final var formatter = new RusNumberFormatter("рублей", "рубль", "рубля");
-        for (var i = -101; i <= 101; i++) {
-            System.out.println(i + " " + formatter.suffixForValue(i));
-            if (i % 10 == 0) System.out.println();
+
+        // NOTE: 🇷🇺
+
+        final var rublesRusNumberFormatter = new RusNumberFormatter(
+                "рублей",
+                "рубль",
+                "рубля"
+        );
+
+        for (var x = 0; x <= 101; x++) {
+            final var number = new RusNumberInWords(x);
+            System.out.println(x + " -> " + number.inWords() + " " + rublesRusNumberFormatter.suffixForValue(x));
+            if (x % 10 == 0) System.out.println();
         }
 
-        final var x = 2_065_427_321;
-        System.out.println(x + " " + formatter.suffixForValue(x));
+        System.out.println();
+
+        var x = 5;
+        var number = new RusNumberInWords(x);
+        System.out.println(x + " -> " + number.inWords() + " " + rublesRusNumberFormatter.suffixForValue(x));
+
+        x = 3;
+        number = new RusNumberInWords(x);
+        System.out.println(x + " -> " + number.inWords() + " " + rublesRusNumberFormatter.suffixForValue(x));
+
+        x = 45;
+        number = new RusNumberInWords(x);
+        System.out.println(x + " -> " + number.inWords() + " " + rublesRusNumberFormatter.suffixForValue(x));
+
+        System.out.println();
+
+        x = Integer.MAX_VALUE;
+        number = new RusNumberInWords(x);
+        System.out.println("\uD83C\uDDF7\uD83C\uDDFA " + x + " -> " + number.inWords() + " " + rublesRusNumberFormatter.suffixForValue(x));
+
+        // NOTE: 🇺🇸
+
+        final var usdNumberFormatter = new RusNumberFormatter(
+                "долларов",
+                "доллар",
+                "доллара"
+        );
+
+        final var sum = 1_065_007_325;
+        number = new RusNumberInWords(sum);
+        System.out.println("\uD83C\uDDFA\uD83C\uDDF8 " +  sum + " -> " + number.inWords() + " " + usdNumberFormatter.suffixForValue(sum));
     }
 }
