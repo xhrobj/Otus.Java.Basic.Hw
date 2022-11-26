@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Students table</title>
+<style>
+        body {
+            background-color: #fff;
+            font: 14px/1.5 Helvetica, Arial, sans-serif;
+        }
+
+        .wrapper {
+            padding: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        table th {
+            padding: 15px 10px;
+            background: darkslategray;
+            color: #fff;
+            border-color: #fff;
+        }
+
+        table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        table td:nth-child(3) {
+            text-align: center;
+        }
+
+        #average-age,
+        table td:nth-child(4) {
+            text-align: right;
+        }
+
+        .birth-date {
+            text-align: center;
+        }
+
+        .form {
+            margin: 25px 0;
+        }
+
+        .form-row {
+            padding: 10px 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .form-field {
+            min-width: 180px;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        select {
+            padding: 5px 10px;
+            width: 200px;
+        }
+
+        .button-wrap {
+            margin: 20px 0;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            padding: 10px;
+            background-color: darkslategray;
+            color: #fff;
+            width: 200px;
+            line-height: 20px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: rgb(38, 65, 65);
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+<table id="data-table">
+<tr>
+<th>Имя</th>
+<th>Пол</th>
+<th>Дата рождения</th>
+<th>Возраст</th>
+</tr>
+<tr>
+<td>Василий Ложкин</td>
+<td>Мужской</td>
+<td class="birth-date">25.07.2000</td>
+<td class="age">22</td>
+</tr>
+<tr>
+<td>Петр Кружкин</td>
+<td>Мужской</td>
+<td class="birth-date">14.10.2000</td>
+<td class="age">27</td>
+</tr>
+<tr>
+<td colspan="4"></td>
+</tr>
+<tr>
+<td colspan="2">Средний возраст студентов</td>
+<td colspan="2"><div id="average-age"></div></td>
+</tr>
+</table>
+<div class="form">
+<form method="post">
+<div class="form-row">
+<label for="name">Введите имя</label>
+<input type="text" id="name" class="form-field">
+</div>
+<div class="form-row">
+<label for="birthday">Введите дату рождения</label>
+<input type="date" id="birthday" name="birthday" class="form-field">
+</div>
+<div class="form-row">
+<label for="sex">Пол</label>
+<select id="sex">
+<option value="male">Мужской</option>
+<option value="female">Женский</option>
+</select>
+</div>
+<div class="button-wrap">
+<button id="add-data">Добавить</button>
+</div>
+</form>
+</div>
+</div>
+<script type="text/javascript">
+        const averageElement = document.getElementById('average-age');
+        averageElement.innerText = getAverageAge();
+        
+        document.getElementById('add-data').addEventListener('click', (event) => {
+            event.preventDefault();
+            
+            const nameValue = document.getElementById('name').value;
+            const birthdayValue = document.getElementById('birthday').value;
+
+            if (!nameValue || !birthdayValue || new Date(birthdayValue) > new Date()) {
+                return;
+            }
+
+            const sexSelectElement = document.getElementById('sex');
+            const sexValue = sexSelectElement.options[sexSelectElement.selectedIndex].text;
+    
+            addNewData({nameValue, sexValue, birthdayValue});
+            averageElement.innerText = getAverageAge();
+
+            resetInput();
+        });
+
+        function resetInput() {
+            document.getElementById('name').value = "";
+            document.getElementById('birthday').value = "";
+            document.getElementById('sex').selectedIndex = 0;
+        }
+    
+        function getAverageAge() {
+            const ageCells = document.querySelectorAll('table td:nth-child(4)');
+            let ageSum = 0;
+
+            if (!ageCells.length) {
+                return ageSum;
+            }
+
+            ageCells.forEach((item) => {
+                ageSum += Number(item.innerText);
+            });
+
+            return Math.floor(ageSum / ageCells.length);
+        }
+
+        getAverageAge();
+
+        function addNewData({nameValue, sexValue, birthdayValue}) {
+            const dataTable = document.getElementById('data-table');
+            const dataToAdd = [nameValue, sexValue, new Date(birthdayValue).toLocaleDateString("ru-RU"), getAge(birthdayValue)];
+            const newRow = dataTable.insertRow(dataTable.rows.length - 2);
+
+            dataToAdd.forEach((item, index) => {
+                const newCell = newRow.insertCell(index);
+                newCell.innerText = item;
+            });
+        }
+
+        function getAge(birthdayValue) {
+            // NOTE: https://stackoverflow.com/a/21984136
+            const ageDifMs = Date.now() - new Date(birthdayValue).getTime();
+            const ageDate = new Date(ageDifMs);
+            return Math.abs(ageDate.getUTCFullYear() - 1970);
+        }
+    </script>
+</body>
+</html>
