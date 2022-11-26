@@ -5,9 +5,9 @@ class GuessTheNumberGame implements AutoCloseable {
     private static final String byeByeSmile = "\uD83D\uDC4B";
     private static final String congratsSmile = "\uD83E\uDD73";
 
-    private int upperBound;
-    private RandomNumber randomNumber;
-    private UserInput console;
+    private final int upperBound;
+    private final  RandomNumber randomNumber;
+    private final UserInput console;
 
     GuessTheNumberGame(int upperBound) {
         this.upperBound = upperBound;
